@@ -35,7 +35,7 @@ export default function Home() {
       };
 
       try {
-        const response = await fetch('/api/newtodo', {
+        await fetch('/api/newtodo', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
