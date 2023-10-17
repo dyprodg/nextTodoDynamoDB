@@ -1,0 +1,25 @@
+{
+  "name": "databaseapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.429.0",
+    "@aws-sdk/lib-dynamodb": "^3.429.0",
+    "@aws-sdk/util-dynamodb": "^3.429.0",
+    "next": "13.5.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10",
+    "postcss": "^8",
+    "tailwindcss": "^3"
+  }
+}
