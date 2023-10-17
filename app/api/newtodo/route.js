@@ -4,7 +4,7 @@ import dynamoConnect from "@/app/utils/dynamoDB";
 import { v4 as uuidv4 } from 'uuid';
 
 const docClient = DynamoDBDocumentClient.from(dynamoConnect());
-const TABLE_NAME = process.env.NEXT_PUBLIC_TABLE_NAME
+const TABLE_NAME = process.env.TABLE_NAME
 
 export async function POST (req) {
     const {description} = await req.json();

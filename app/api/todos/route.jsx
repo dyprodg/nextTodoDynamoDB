@@ -4,7 +4,7 @@ import dynamoConnect from '@/app/utils/dynamoDB';
 
 
 const docClient = DynamoDBDocumentClient.from(dynamoConnect());
-const TABLE_NAME = process.env.NEXT_PUBLIC_TABLE_NAME
+const TABLE_NAME = process.env.TABLE_NAME
 
 export async function GET(req) {
   try {
