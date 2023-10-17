@@ -1,6 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react'
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("")
@@ -52,19 +51,20 @@ export default function Home() {
   }
 
   //funktion zum loeschen aller eintraege
-  const handleClear = async() => {
+  const handleClear = async () => {
     try {
-      const response = await fetch('/api/clearList',{
+      await fetch('/api/clearList', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+          'Content-Type': 'application/json',
+        },
+      });
       await fetchTodos();
     } catch (error) {
-      console.error('Fehler beim POST clearList')
+      console.error('Fehler beim POST clearList', error);
     }
-  }
+  };
+  
 
 
   //funktion zum loeschen einzelner eintraege
