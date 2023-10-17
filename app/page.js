@@ -7,13 +7,16 @@ export default function Home() {
   const [todos, setTodos] = useState([])
 
 
-  //kontinuierliches fetchen der liste
-  useEffect(() => {
-    fetch('/api/todos')
-    .then(response => response.json())
-    .then(data => setTodos(data))
-    .catch(error => console.log('Fehler beim Abrufen der API'))
-  })
+  //Fetch Funktion
+  const fetchTodos = async () => {
+    try {
+      const response = await fetch('/api/todos');
+      const data = await response.json();
+      setTodos(data);
+    } catch (error) {
+      console.log('Fehler beim Abrufen der Todos:', error);
+    }
+  };
 
   const handleInput = (e) => {
     const value = e.target.value
@@ -40,6 +43,7 @@ export default function Home() {
           },
           body: JSON.stringify(newTodo)
         })
+        await fetchTodos();
       } catch (error) {
         console.error('Problem beim Fetch POST new Todo', error)
     }
@@ -56,6 +60,7 @@ export default function Home() {
           'Content-Type': 'application/json'
         }
       })
+      await fetchTodos();
     } catch (error) {
       console.error('Fehler beim POST clearList')
     }
@@ -72,6 +77,7 @@ export default function Home() {
         },
         body: JSON.stringify({ id })
       })
+      await fetchTodos();
     } catch (error) {
       console.error('Fehler beim Loeschen', error)
     }
@@ -86,16 +92,19 @@ export default function Home() {
     <div className='m-3 flex flex-col p-4 bg-white border rounded-md shadow-lg sticky top-0 z-10'>
     <h1 className='text-5xl font-bold p-4 my-2 text-center'>My Todo App</h1>
     <div className='flex flex-col border rounded-lg p-4 gap-4 shadow-md'>
+      <form onSubmit={handleSubmit}>
       <input type='text' placeholder='your todo'
       onInput={handleInput}
       value={inputValue}
-      className='border p-4 rounded-lg'></input>
+      className='w-full border p-4 rounded-lg'></input>
       <div className='w-full grid grid-cols-2'>
-      <button className='text-white bg-black border px-2 py-2 m-2 rounded-full hover:shadow-lg transition duration-150'
-      onClick={handleSubmit}>Add Todo</button>
+      <button type='submit' className='text-white bg-black border px-2 py-2 m-2 rounded-full hover:shadow-lg transition duration-150'
+      >Add Todo</button>
       <button className='text-white bg-black border px-2 py-2 m-2  rounded-full hover:shadow-lg transition duration-150'
       onClick={handleClear}>Clear List</button>
       </div>
+      </form>
+
     </div>
     </div>
 
@@ -104,8 +113,8 @@ export default function Home() {
       <ul className='text-lg font-thin space-y-3'>
         {
         todos.map(todo => 
-        <div className=''>
-        <li key={todo.id}
+        <div key={todo.id} className=''>
+        <li 
         className='flex border rounded-full py-2 px-4 items-center justify-between'>{todo.description}
         <button 
          onClick={() => deleteTodo(todo.id)} 
