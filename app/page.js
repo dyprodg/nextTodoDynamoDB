@@ -70,7 +70,7 @@ export default function Home() {
   //funktion zum loeschen einzelner eintraege
   const deleteTodo = async(id) => {
     try {
-      const response = await fetch('/api/deleteTodo', {
+      await fetch('/api/deleteTodo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
