@@ -1,26 +1,30 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("")
   const [todos, setTodos] = useState([])
 
+    // Fetch Funktion
+  useEffect(() => {
+    // Funktion zum Abrufen der Daten von der API
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/todos');
+        const data = await response.json();
+        setTodos(data); // Setze die Daten in deinen Zustand (todos)
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Daten:', error);
+      }
+    };
 
-  //Fetch Funktion
-  const fetchTodos = async () => {
-    try {
-      const response = await fetch('/api/todos');
-      const data = await response.json();
-      setTodos(data);
-    } catch (error) {
-      console.log('Fehler beim Abrufen der Todos:', error);
+    fetchData(); // Rufe die Daten beim Laden der Seite auf
+  }, []);
+
+    const handleInput = (e) => {
+      const value = e.target.value
+      setInputValue(value)
     }
-  };
-
-  const handleInput = (e) => {
-    const value = e.target.value
-    setInputValue(value)
-  }
 
 
   //funktion zum hinzufuegen eines eintrags
@@ -110,20 +114,23 @@ export default function Home() {
 
     {/* List */}
     <div className='flex-1 overflow-auto text-center p-4'>
-      <ul className='text-lg font-thin space-y-3'>
-        {
-        todos.map(todo => 
-        <div key={todo.id} className=''>
-        <li 
-        className='flex border rounded-full py-2 px-4 items-center justify-between'>{todo.description}
-        <button 
-         onClick={() => deleteTodo(todo.id)} 
-        className='border rounded-full text-white bg-black hover:shadow-md transition duration-100 px-4 py-2'>Delete</button>
+  <ul className='text-lg font-thin space-y-3'>
+    {todos.map((todo) => (
+      <div key={todo.id} className=''>
+        <li className='flex border rounded-full py-2 px-4 items-center justify-between'>
+          {todo.description}
+          <button
+            onClick={() => deleteTodo(todo.id)}
+            className='border rounded-full text-white bg-black hover:shadow-md transition duration-100 px-4 py-2'
+          >
+            Delete
+          </button>
         </li>
-        </div>
-        )}
-      </ul>
-    </div>
+      </div>
+    ))}
+  </ul>
+</div>
+
    </main>
   )
 }
