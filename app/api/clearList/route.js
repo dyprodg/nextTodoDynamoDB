@@ -1,4 +1,4 @@
-import { DynamoDBDocumentClient, ScanCommand, DeleteCommand, DynamoDBDocumentClientCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, ScanCommand, DeleteCommand} from "@aws-sdk/lib-dynamodb";
 import dynamoConnect from "@/app/utils/dynamoDB";
 
 const docClient = DynamoDBDocumentClient.from(dynamoConnect());
