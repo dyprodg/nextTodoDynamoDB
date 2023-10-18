@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("")
@@ -16,6 +16,11 @@ export default function Home() {
       console.log('Fehler beim Abrufen der Todos:', error);
     }
   };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []); 
+
 
   const handleInput = (e) => {
     const value = e.target.value
